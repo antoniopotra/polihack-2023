@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "661884499419",
+    "project_id": "polihack2023",
+    "storage_bucket": "polihack2023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661884499419:android:b81ed78c7403286a4423fe",
+        "android_client_info": {
+          "package_name": "com.example.polihack2023"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFzzueWxDWIOoIrcg2Vc7GqSoCelMMbOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
