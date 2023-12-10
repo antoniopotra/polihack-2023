@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -90,7 +91,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'SplashScreen',
           path: '/splashScreen',
-          builder: (context, params) => SplashScreenWidget(),
+          builder: (context, params) => SplashScreenWidget(
+            logo: params.getParam('logo', ParamType.FFUploadedFile),
+          ),
         ),
         FFRoute(
           name: 'Login',
@@ -98,23 +101,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => LoginWidget(),
         ),
         FFRoute(
-          name: 'myTasks',
-          path: '/myTasks',
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'myTasks')
-              : MyTasksWidget(),
+          name: 'Feed',
+          path: '/feed',
+          builder: (context, params) =>
+              params.isEmpty ? NavBarPage(initialPage: 'Feed') : FeedWidget(),
         ),
         FFRoute(
           name: 'Register',
           path: '/register',
           builder: (context, params) => RegisterWidget(),
-        ),
-        FFRoute(
-          name: 'CompletedTasks',
-          path: '/completedTasks',
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'CompletedTasks')
-              : CompletedTasksWidget(),
         ),
         FFRoute(
           name: 'EditProfile',
@@ -126,14 +121,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => EditProfileWidget(
             displayName: params.getParam('displayName', ParamType.Document),
             email: params.getParam('email', ParamType.Document),
-          ),
-        ),
-        FFRoute(
-          name: 'TaskDetails',
-          path: '/taskDetails',
-          builder: (context, params) => TaskDetailsWidget(
-            toDoNote: params.getParam(
-                'toDoNote', ParamType.DocumentReference, false, ['ToDoList']),
           ),
         ),
         FFRoute(
@@ -157,6 +144,36 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   initialPage: 'Events',
                   page: EventsWidget(),
                 ),
+        ),
+        FFRoute(
+          name: 'event_description',
+          path: '/eventDescription',
+          builder: (context, params) => EventDescriptionWidget(),
+        ),
+        FFRoute(
+          name: 'event_description_swimming',
+          path: '/eventDescriptionSwimming',
+          builder: (context, params) => EventDescriptionSwimmingWidget(),
+        ),
+        FFRoute(
+          name: 'userChat',
+          path: '/userChat',
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'userChat')
+              : UserChatWidget(),
+        ),
+        FFRoute(
+          name: 'roomChat',
+          path: '/roomChat',
+          builder: (context, params) => RoomChatWidget(),
+        ),
+        FFRoute(
+          name: 'event_general',
+          path: '/eventGeneral',
+          builder: (context, params) => EventGeneralWidget(
+            imagRef: params.getParam(
+                'imagRef', ParamType.DocumentReference, false, ['eventuri']),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

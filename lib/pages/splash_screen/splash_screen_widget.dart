@@ -12,7 +12,12 @@ import 'splash_screen_model.dart';
 export 'splash_screen_model.dart';
 
 class SplashScreenWidget extends StatefulWidget {
-  const SplashScreenWidget({Key? key}) : super(key: key);
+  const SplashScreenWidget({
+    Key? key,
+    this.logo,
+  }) : super(key: key);
+
+  final FFUploadedFile? logo;
 
   @override
   _SplashScreenWidgetState createState() => _SplashScreenWidgetState();
@@ -25,32 +30,6 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = {
-    'imageOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(-0.0, 64.0),
-          end: Offset(0.0, 0.0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(1.0, 0.0),
-          end: Offset(1.0, 1.0),
-        ),
-      ],
-    ),
     'buttonOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
@@ -164,13 +143,15 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      'assets/images/logo_HomeScreen@3x.png',
-                      width: 164.0,
-                      height: 234.0,
-                      fit: BoxFit.fitHeight,
-                    ).animateOnPageLoad(
-                        animationsMap['imageOnPageLoadAnimation']!),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.asset(
+                        'assets/images/pace2-removebg.png',
+                        width: 300.0,
+                        height: 264.0,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -194,7 +175,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                                 onPressed: () async {
                                   context.pushNamed('Register');
                                 },
-                                text: 'Register',
+                                text: 'Înregistrare',
                                 options: FFButtonOptions(
                                   width: 200.0,
                                   height: 50.0,
@@ -224,7 +205,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                               onPressed: () async {
                                 context.pushNamed('Login');
                               },
-                              text: 'Login',
+                              text: 'Autentificare',
                               options: FFButtonOptions(
                                 width: 200.0,
                                 height: 50.0,

@@ -114,7 +114,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'myTasks';
+  String _currentPageName = 'Feed';
   late Widget? _currentPage;
 
   @override
@@ -127,10 +127,10 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'myTasks': MyTasksWidget(),
-      'MyProfile': MyProfileWidget(),
-      'CompletedTasks': CompletedTasksWidget(),
+      'Feed': FeedWidget(),
       'Events': EventsWidget(),
+      'userChat': UserChatWidget(),
+      'MyProfile': MyProfileWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -151,14 +151,26 @@ class _NavBarPageState extends State<NavBarPage> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.playlist_add,
-              size: 32.0,
-            ),
-            activeIcon: Icon(
-              Icons.playlist_add,
-              size: 32.0,
+              Icons.home,
+              size: 20.0,
             ),
             label: '--',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.event,
+              size: 24.0,
+            ),
+            label: 'Events',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.chat,
+              size: 24.0,
+            ),
+            label: 'Home',
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -171,30 +183,6 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 32.0,
             ),
             label: '--',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.alarm_on,
-              size: 32.0,
-            ),
-            activeIcon: Icon(
-              Icons.alarm_on,
-              size: 32.0,
-            ),
-            label: '--',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 24.0,
-            ),
-            activeIcon: Icon(
-              Icons.event,
-              size: 24.0,
-            ),
-            label: 'Home',
             tooltip: '',
           )
         ],

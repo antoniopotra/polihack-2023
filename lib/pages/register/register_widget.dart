@@ -80,6 +80,32 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       ).image,
                     ),
                   ),
+                  child: Align(
+                    alignment: AlignmentDirectional(0.00, -1.00),
+                    child: Container(
+                      width: 413.0,
+                      height: 126.0,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF131619),
+                      ),
+                      child: Align(
+                        alignment: AlignmentDirectional(0.00, 0.00),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 40.0, 0.0, 0.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.asset(
+                              'assets/images/pace2-removebg.png',
+                              width: 100.0,
+                              height: 100.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -100,8 +126,8 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           focusNode: _model.fullNameFocusNode,
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText: 'Full Name',
-                            hintText: 'Enter your name here...',
+                            labelText: 'Nume întreg',
+                            hintText: 'Introduceți-vă numele...',
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).secondary,
@@ -151,8 +177,8 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             focusNode: _model.textFieldFocusNode1,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Email Address',
-                              hintText: 'Enter your email here...',
+                              labelText: 'Email',
+                              hintText: 'Introduceși-vă emailul...',
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).secondary,
@@ -203,8 +229,8 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             focusNode: _model.textFieldFocusNode2,
                             obscureText: !_model.passwordVisibility1,
                             decoration: InputDecoration(
-                              labelText: 'Password',
-                              hintText: 'Enter your password here...',
+                              labelText: 'Parolă',
+                              hintText: 'Intrpduceși-vă parola...',
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).secondary,
@@ -268,8 +294,8 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             focusNode: _model.textFieldFocusNode3,
                             obscureText: !_model.passwordVisibility2,
                             decoration: InputDecoration(
-                              labelText: 'Confirm Password',
-                              hintText: 'Confirm password here...',
+                              labelText: 'Confirmare parolă',
+                              hintText: 'Reintrpduceși-vă parola...',
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).secondary,
@@ -360,9 +386,9 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                     displayName: _model.fullNameController.text,
                                   ));
 
-                              context.goNamedAuth('myTasks', context.mounted);
+                              context.goNamedAuth('Feed', context.mounted);
                             },
-                            text: 'Create Account',
+                            text: 'Crează cont',
                             options: FFButtonOptions(
                               width: 200.0,
                               height: 50.0,
@@ -402,13 +428,13 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 6.0),
                             child: Text(
-                              'Don’t have an account yet? ',
+                              'Ai deja cont?',
                               style: FlutterFlowTheme.of(context).bodyLarge,
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                                20.0, 8.0, 0.0, 3.0),
                             child: FFButtonWidget(
                               onPressed: () async {
                                 context.pushNamed(
@@ -422,9 +448,9 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                   },
                                 );
                               },
-                              text: 'Register',
+                              text: 'Autentifică-te',
                               options: FFButtonOptions(
-                                width: 80.0,
+                                width: 100.0,
                                 height: 30.0,
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 0.0),

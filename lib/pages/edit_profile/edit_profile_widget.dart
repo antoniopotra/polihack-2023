@@ -36,8 +36,10 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
     super.initState();
     _model = createModel(context, () => EditProfileModel());
 
+    _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
 
+    _model.textController2 ??= TextEditingController();
     _model.textFieldFocusNode2 ??= FocusNode();
   }
 
@@ -180,10 +182,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 16.0, 16.0, 0.0),
                                 child: TextFormField(
-                                  controller: _model.textController1 ??=
-                                      TextEditingController(
-                                    text: editProfileUsersRecord?.displayName,
-                                  ),
+                                  controller: _model.textController1,
                                   focusNode: _model.textFieldFocusNode1,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -241,10 +240,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 16.0, 16.0, 0.0),
                                 child: TextFormField(
-                                  controller: _model.textController2 ??=
-                                      TextEditingController(
-                                    text: editProfileUsersRecord?.email,
-                                  ),
+                                  controller: _model.textController2,
                                   focusNode: _model.textFieldFocusNode2,
                                   obscureText: false,
                                   decoration: InputDecoration(

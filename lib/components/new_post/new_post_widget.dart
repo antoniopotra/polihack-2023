@@ -1,27 +1,29 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
 import 'dart:ui';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'create_task_new_model.dart';
-export 'create_task_new_model.dart';
+import 'new_post_model.dart';
+export 'new_post_model.dart';
 
-class CreateTaskNewWidget extends StatefulWidget {
-  const CreateTaskNewWidget({Key? key}) : super(key: key);
+class NewPostWidget extends StatefulWidget {
+  const NewPostWidget({
+    Key? key,
+    this.description,
+  }) : super(key: key);
+
+  final FFUploadedFile? description;
 
   @override
-  _CreateTaskNewWidgetState createState() => _CreateTaskNewWidgetState();
+  _NewPostWidgetState createState() => _NewPostWidgetState();
 }
 
-class _CreateTaskNewWidgetState extends State<CreateTaskNewWidget> {
-  late CreateTaskNewModel _model;
+class _NewPostWidgetState extends State<NewPostWidget> {
+  late NewPostModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -32,13 +34,10 @@ class _CreateTaskNewWidgetState extends State<CreateTaskNewWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CreateTaskNewModel());
+    _model = createModel(context, () => NewPostModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
-
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -118,7 +117,7 @@ class _CreateTaskNewWidgetState extends State<CreateTaskNewWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Text(
-                                'Add Task',
+                                'Adaugă o postare',
                                 style:
                                     FlutterFlowTheme.of(context).headlineMedium,
                               ),
@@ -131,78 +130,136 @@ class _CreateTaskNewWidgetState extends State<CreateTaskNewWidget> {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Text(
-                                'Fill out the details below to add a new task.',
-                                style: FlutterFlowTheme.of(context).titleSmall,
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 10.0),
+                                child: Text(
+                                  'Completează câmpurile de mai jos',
+                                  style:
+                                      FlutterFlowTheme.of(context).titleSmall,
+                                ),
                               ),
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 16.0, 16.0, 0.0),
-                          child: TextFormField(
-                            controller: _model.textController1,
-                            focusNode: _model.textFieldFocusNode1,
-                            autofocus: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Task Name',
-                              labelStyle:
-                                  FlutterFlowTheme.of(context).titleSmall,
-                              hintText: 'Enter your task here....',
-                              hintStyle:
-                                  FlutterFlowTheme.of(context).titleSmall,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
-                                  width: 1.0,
+                        Container(
+                          width: 340.0,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF1A1F24),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 10.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20.0, 0.0, 0.0, 0.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      final selectedMedia =
+                                          await selectMediaWithSourceBottomSheet(
+                                        context: context,
+                                        allowPhoto: true,
+                                      );
+                                      if (selectedMedia != null &&
+                                          selectedMedia.every((m) =>
+                                              validateFileFormat(
+                                                  m.storagePath, context))) {
+                                        setState(() =>
+                                            _model.isDataUploading = true);
+                                        var selectedUploadedFiles =
+                                            <FFUploadedFile>[];
+
+                                        try {
+                                          selectedUploadedFiles = selectedMedia
+                                              .map((m) => FFUploadedFile(
+                                                    name: m.storagePath
+                                                        .split('/')
+                                                        .last,
+                                                    bytes: m.bytes,
+                                                    height:
+                                                        m.dimensions?.height,
+                                                    width: m.dimensions?.width,
+                                                    blurHash: m.blurHash,
+                                                  ))
+                                              .toList();
+                                        } finally {
+                                          _model.isDataUploading = false;
+                                        }
+                                        if (selectedUploadedFiles.length ==
+                                            selectedMedia.length) {
+                                          setState(() {
+                                            _model.uploadedLocalFile =
+                                                selectedUploadedFiles.first;
+                                          });
+                                        } else {
+                                          setState(() {});
+                                          return;
+                                        }
+                                      }
+                                    },
+                                    text: 'Încarcă poză',
+                                    options: FFButtonOptions(
+                                      height: 40.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          24.0, 0.0, 24.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Outfit',
+                                            color: Colors.white,
+                                          ),
+                                      elevation: 3.0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondary,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        20.0, 20.0, 20.0, 20.0),
+                                    child: Icon(
+                                      Icons.photo_outlined,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 30.0,
+                                    ),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              filled: true,
-                              fillColor: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
+                              ],
                             ),
-                            style: FlutterFlowTheme.of(context).bodyMedium,
-                            validator: _model.textController1Validator
-                                .asValidator(context),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 16.0, 16.0, 0.0),
                           child: TextFormField(
-                            controller: _model.textController2,
-                            focusNode: _model.textFieldFocusNode2,
+                            controller: _model.textController,
+                            focusNode: _model.textFieldFocusNode,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Details',
+                              labelText: 'Scrie o descriere',
                               labelStyle:
                                   FlutterFlowTheme.of(context).titleSmall,
-                              hintText: 'Enter a description here...',
                               hintStyle:
                                   FlutterFlowTheme.of(context).titleSmall,
                               enabledBorder: OutlineInputBorder(
@@ -241,72 +298,8 @@ class _CreateTaskNewWidgetState extends State<CreateTaskNewWidget> {
                             style: FlutterFlowTheme.of(context).bodyMedium,
                             textAlign: TextAlign.start,
                             maxLines: 3,
-                            validator: _model.textController2Validator
+                            validator: _model.textControllerValidator
                                 .asValidator(context),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 16.0, 16.0, 0.0),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              await DatePicker.showDateTimePicker(
-                                context,
-                                showTitleActions: true,
-                                onConfirm: (date) {
-                                  safeSetState(() {
-                                    _model.datePicked = date;
-                                  });
-                                },
-                                currentTime: getCurrentTimestamp,
-                                minTime: getCurrentTimestamp,
-                              );
-                            },
-                            child: Container(
-                              width: MediaQuery.sizeOf(context).width * 0.92,
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                borderRadius: BorderRadius.circular(8.0),
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
-                                  width: 1.0,
-                                ),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 0.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Text(
-                                      valueOrDefault<String>(
-                                        dateTimeFormat(
-                                            'MMMEd', _model.datePicked),
-                                        'Select a Date / Time',
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleSmall,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          4.0, 0.0, 0.0, 0.0),
-                                      child: Text(
-                                        dateTimeFormat('jm', _model.datePicked),
-                                        style: FlutterFlowTheme.of(context)
-                                            .titleSmall,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
                           ),
                         ),
                         Padding(
@@ -320,7 +313,7 @@ class _CreateTaskNewWidgetState extends State<CreateTaskNewWidget> {
                                 onPressed: () async {
                                   context.pop();
                                 },
-                                text: 'Cancel',
+                                text: 'Anulare',
                                 options: FFButtonOptions(
                                   width: 110.0,
                                   height: 50.0,
@@ -346,20 +339,10 @@ class _CreateTaskNewWidgetState extends State<CreateTaskNewWidget> {
                                 ),
                               ),
                               FFButtonWidget(
-                                onPressed: () async {
-                                  await ToDoListRecord.collection
-                                      .doc()
-                                      .set(createToDoListRecordData(
-                                        toDoName: _model.textController1.text,
-                                        toDoDescription:
-                                            _model.textController2.text,
-                                        toDoDate: _model.datePicked,
-                                        user: currentUserReference,
-                                        toDoState: false,
-                                      ));
-                                  context.pop();
+                                onPressed: () {
+                                  print('Button pressed ...');
                                 },
-                                text: 'Create Task',
+                                text: 'Adaugă',
                                 options: FFButtonOptions(
                                   width: 170.0,
                                   height: 50.0,

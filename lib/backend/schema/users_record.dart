@@ -16,55 +16,49 @@ class UsersRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "Password" field.
-  String? _password;
-  String get password => _password ?? '';
-  bool hasPassword() => _password != null;
-
-  // "FullName" field.
-  String? _fullName;
-  String get fullName => _fullName ?? '';
-  bool hasFullName() => _fullName != null;
-
-  // "uid" field.
-  String? _uid;
-  String get uid => _uid ?? '';
-  bool hasUid() => _uid != null;
+  // "display_name" field.
+  String? _displayName;
+  String get displayName => _displayName ?? '';
+  bool hasDisplayName() => _displayName != null;
 
   // "email" field.
   String? _email;
   String get email => _email ?? '';
   bool hasEmail() => _email != null;
 
-  // "display_name" field.
-  String? _displayName;
-  String get displayName => _displayName ?? '';
-  bool hasDisplayName() => _displayName != null;
+  // "uid" field.
+  String? _uid;
+  String get uid => _uid ?? '';
+  bool hasUid() => _uid != null;
 
   // "created_time" field.
   DateTime? _createdTime;
   DateTime? get createdTime => _createdTime;
   bool hasCreatedTime() => _createdTime != null;
 
-  // "phone_number" field.
-  String? _phoneNumber;
-  String get phoneNumber => _phoneNumber ?? '';
-  bool hasPhoneNumber() => _phoneNumber != null;
-
   // "photo_url" field.
   String? _photoUrl;
   String get photoUrl => _photoUrl ?? '';
   bool hasPhotoUrl() => _photoUrl != null;
 
+  // "phone_number" field.
+  String? _phoneNumber;
+  String get phoneNumber => _phoneNumber ?? '';
+  bool hasPhoneNumber() => _phoneNumber != null;
+
+  // "isTrainer" field.
+  bool? _isTrainer;
+  bool get isTrainer => _isTrainer ?? false;
+  bool hasIsTrainer() => _isTrainer != null;
+
   void _initializeFields() {
-    _password = snapshotData['Password'] as String?;
-    _fullName = snapshotData['FullName'] as String?;
-    _uid = snapshotData['uid'] as String?;
-    _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
+    _email = snapshotData['email'] as String?;
+    _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
-    _phoneNumber = snapshotData['phone_number'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
+    _phoneNumber = snapshotData['phone_number'] as String?;
+    _isTrainer = snapshotData['isTrainer'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -101,25 +95,23 @@ class UsersRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createUsersRecordData({
-  String? password,
-  String? fullName,
-  String? uid,
-  String? email,
   String? displayName,
+  String? email,
+  String? uid,
   DateTime? createdTime,
-  String? phoneNumber,
   String? photoUrl,
+  String? phoneNumber,
+  bool? isTrainer,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'Password': password,
-      'FullName': fullName,
-      'uid': uid,
-      'email': email,
       'display_name': displayName,
+      'email': email,
+      'uid': uid,
       'created_time': createdTime,
-      'phone_number': phoneNumber,
       'photo_url': photoUrl,
+      'phone_number': phoneNumber,
+      'isTrainer': isTrainer,
     }.withoutNulls,
   );
 
@@ -131,26 +123,24 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
 
   @override
   bool equals(UsersRecord? e1, UsersRecord? e2) {
-    return e1?.password == e2?.password &&
-        e1?.fullName == e2?.fullName &&
-        e1?.uid == e2?.uid &&
+    return e1?.displayName == e2?.displayName &&
         e1?.email == e2?.email &&
-        e1?.displayName == e2?.displayName &&
+        e1?.uid == e2?.uid &&
         e1?.createdTime == e2?.createdTime &&
+        e1?.photoUrl == e2?.photoUrl &&
         e1?.phoneNumber == e2?.phoneNumber &&
-        e1?.photoUrl == e2?.photoUrl;
+        e1?.isTrainer == e2?.isTrainer;
   }
 
   @override
   int hash(UsersRecord? e) => const ListEquality().hash([
-        e?.password,
-        e?.fullName,
-        e?.uid,
-        e?.email,
         e?.displayName,
+        e?.email,
+        e?.uid,
         e?.createdTime,
+        e?.photoUrl,
         e?.phoneNumber,
-        e?.photoUrl
+        e?.isTrainer
       ]);
 
   @override

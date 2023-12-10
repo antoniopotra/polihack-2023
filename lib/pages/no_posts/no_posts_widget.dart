@@ -1,4 +1,4 @@
-import '/components/create_task_new/create_task_new_widget.dart';
+import '/components/new_post/new_post_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'empty_list_tasks_model.dart';
-export 'empty_list_tasks_model.dart';
+import 'no_posts_model.dart';
+export 'no_posts_model.dart';
 
-class EmptyListTasksWidget extends StatefulWidget {
-  const EmptyListTasksWidget({Key? key}) : super(key: key);
+class NoPostsWidget extends StatefulWidget {
+  const NoPostsWidget({Key? key}) : super(key: key);
 
   @override
-  _EmptyListTasksWidgetState createState() => _EmptyListTasksWidgetState();
+  _NoPostsWidgetState createState() => _NoPostsWidgetState();
 }
 
-class _EmptyListTasksWidgetState extends State<EmptyListTasksWidget> {
-  late EmptyListTasksModel _model;
+class _NoPostsWidgetState extends State<NoPostsWidget> {
+  late NoPostsModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -28,7 +28,7 @@ class _EmptyListTasksWidgetState extends State<EmptyListTasksWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => EmptyListTasksModel());
+    _model = createModel(context, () => NoPostsModel());
   }
 
   @override
@@ -57,7 +57,7 @@ class _EmptyListTasksWidgetState extends State<EmptyListTasksWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'You don\'t have any tasks',
+                'Nu aveți nicio postare',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).headlineSmall,
               ),
@@ -72,7 +72,7 @@ class _EmptyListTasksWidgetState extends State<EmptyListTasksWidget> {
             children: [
               Expanded(
                 child: Text(
-                  'Create tasks by tapping the button below.',
+                  'Creați una apăsând pe butonul de mai jos',
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).titleSmall,
                 ),
@@ -94,13 +94,13 @@ class _EmptyListTasksWidgetState extends State<EmptyListTasksWidget> {
                     padding: MediaQuery.viewInsetsOf(context),
                     child: Container(
                       height: double.infinity,
-                      child: CreateTaskNewWidget(),
+                      child: NewPostWidget(),
                     ),
                   );
                 },
               ).then((value) => safeSetState(() {}));
             },
-            text: 'Create Task',
+            text: 'Postare nouă',
             options: FFButtonOptions(
               width: 170.0,
               height: 50.0,

@@ -64,18 +64,49 @@ class _LoginWidgetState extends State<LoginWidget> {
               Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Container(
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    height: 200.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primary,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: Image.asset(
-                          'assets/images/topSection.png',
-                        ).image,
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: 200.0,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primary,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: Image.asset(
+                              'assets/images/topSection.png',
+                            ).image,
+                          ),
+                        ),
+                        child: Align(
+                          alignment: AlignmentDirectional(0.00, -1.00),
+                          child: Container(
+                            width: 413.0,
+                            height: 126.0,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF131619),
+                            ),
+                            child: Align(
+                              alignment: AlignmentDirectional(0.00, 0.00),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 40.0, 0.0, 0.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.asset(
+                                    'assets/images/pace2-removebg.png',
+                                    width: 100.0,
+                                    height: 100.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -97,8 +128,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                               focusNode: _model.textFieldFocusNode1,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: 'Email Address',
-                                hintText: 'Your email...',
+                                labelText: 'Email ',
+                                labelStyle: FlutterFlowTheme.of(context)
+                                    .bodyLarge
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: Color(0xBEFFFFFF),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                hintText: 'Email...',
                                 hintStyle: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -163,8 +201,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 focusNode: _model.textFieldFocusNode2,
                                 obscureText: !_model.passwordVisibility,
                                 decoration: InputDecoration(
-                                  labelText: 'Password',
-                                  hintText: 'Enter your password here...',
+                                  labelText: 'Parolă',
+                                  hintText: 'Parolă...',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -253,10 +291,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     return;
                                   }
 
-                                  context.goNamedAuth(
-                                      'myTasks', context.mounted);
+                                  context.goNamedAuth('Feed', context.mounted);
                                 },
-                                text: 'Login',
+                                text: 'Autentificare',
                                 options: FFButtonOptions(
                                   width: 250.0,
                                   height: 60.0,
@@ -294,45 +331,50 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 6.0),
                                     child: Text(
-                                      'Don’t have an account yet? ',
+                                      'Nu ai cont?',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyLarge,
                                     ),
                                   ),
-                                  FFButtonWidget(
-                                    onPressed: () async {
-                                      context.pushNamed(
-                                        'Register',
-                                        extra: <String, dynamic>{
-                                          kTransitionInfoKey: TransitionInfo(
-                                            hasTransition: true,
-                                            transitionType:
-                                                PageTransitionType.fade,
-                                            duration:
-                                                Duration(milliseconds: 200),
-                                          ),
-                                        },
-                                      );
-                                    },
-                                    text: 'Register',
-                                    options: FFButtonOptions(
-                                      width: 100.0,
-                                      height: 32.0,
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      iconPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 0.0),
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium,
-                                      elevation: 0.0,
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1.0,
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        5.0, 0.0, 0.0, 2.0),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        context.pushNamed(
+                                          'Register',
+                                          extra: <String, dynamic>{
+                                            kTransitionInfoKey: TransitionInfo(
+                                              hasTransition: true,
+                                              transitionType:
+                                                  PageTransitionType.fade,
+                                              duration:
+                                                  Duration(milliseconds: 200),
+                                            ),
+                                          },
+                                        );
+                                      },
+                                      text: 'Înregistrează-te',
+                                      options: FFButtonOptions(
+                                        width: 120.0,
+                                        height: 32.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleMedium,
+                                        elevation: 0.0,
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(0.0),
                                       ),
-                                      borderRadius: BorderRadius.circular(0.0),
                                     ),
                                   ),
                                 ],
